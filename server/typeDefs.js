@@ -1,17 +1,20 @@
 const { gql } = require("apollo-server-lambda");
 
-exports.typeDefs = gql`
+const typeDefs = gql`
   type Query {
-    categories: [String]
     randomJoke(category: String): Joke
+    categories: [String]
   }
-  
+
   type Joke {
-    created_at,
-    icon_url,
-    id,
-    updated_at,
-    url,
-    value
+    categories: [String]
+    created_at: String
+    icon_url: String
+    id: String
+    updated_at: String
+    url: String
+    value: String
   }
 `;
+
+module.exports = typeDefs;

@@ -1,6 +1,6 @@
 # serverless.yml
 
-service: chuck-lambda
+service: chuck-norris-lambda
 provider:
   name: aws
   runtime: nodejs8.10
