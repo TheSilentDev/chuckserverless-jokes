@@ -1,15 +1,21 @@
-// graphql.js
+const { ApolloServer } = require("apollo-server-lambda");
+const ChuckNorrisAPI = require("./datasources/chuckNorrisDataSource");
+const { typeDefs } = require("./typeDefs");
+const { resolvers } = require("./resolvers");
 
-const { ApolloServer, gql } = require("apollo-server-lambda");
-const typeDefs = require("./typeDefs");
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => "Hello world!"
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => {
+    return {
+      chuckNorrisAPI: new ChuckNorrisAPI()
+    };
   }
-};
+});
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-exports.graphqlHandler = server.createHandler();
+exports.graphqlHandler = server.createHandler({
+  cors: {
+    origin: "*",
+    credentials: true
+  }
+});
